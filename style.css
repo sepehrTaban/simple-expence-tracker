@@ -1,0 +1,435 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+    outline: 0;
+    scroll-behavior: smooth;
+    font-family: tahoma;
+}
+body,
+
+.main-footer,
+.forms,
+.result,
+.detail-table-container,
+.result .table-container,
+.detail-table-container .detail-table-wrap,
+.total-result,
+.forms form,
+.wrapper,
+.resultMsgs{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    width: 100%;
+}
+button{
+    cursor: pointer;
+    transition: all .3s;
+}
+body{
+    min-height: 100vh;
+    background: #334961;
+    overflow-x: hidden;  
+}
+.main-header,
+nav{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1rem 0 0;
+    background:#201d2f;
+    color:#1cc483;
+}
+nav{
+    padding: 0 0 .5rem;
+}
+nav ul{
+    display: flex;
+    padding: .5rem 0;
+}
+nav ul{
+    display: flex;
+    padding: .5rem 0;
+}
+nav ul li{
+    padding: 1rem 1rem 0;
+    list-style: none;
+}
+nav ul li button,
+.subBtn{
+    background:#201d2f;
+    color: #fff;
+    border:1px solid #3d9e6e;
+    padding: .5rem;
+    border-radius: 50px;
+    font-weight: 600;    
+}
+nav ul li button{
+    font-size: 1.2rem;
+
+}
+nav ul li:hover button,
+.subBtn:hover{
+    background: #fff;
+    color: #3d9e6e;
+    transition: all .3s;
+    cursor: pointer;
+}
+nav ul li button.active,
+.btn{
+    background: #1cc483;
+    color:#fff;
+    border: 2px solid #fff;
+    cursor: pointer;
+}
+.main-footer{
+    padding: 1rem 0;
+    background:#201d2f;
+    color: #DDDDDD;
+}
+.main{
+    flex-grow: 1;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    height: 100%;
+    width: 100%;
+    align-items: flex-start;
+    position: relative;   
+}
+.forms,
+.result,
+.detail-table-container{
+    align-self: center;    
+    min-height: 500px;
+    height: auto;
+}
+.result{
+    position: relative;
+}
+.result .table-container,
+.detail-table-container .detail-table-wrap{
+    padding: 0 1rem;       
+    max-height: 300px;
+    overflow: scroll;  
+}
+.detail-table-container .detail-table-wrap{
+    max-height: 500px;
+}
+.result .table-container::-webkit-scrollbar,
+.detail-table-container .detail-table-wrap::-webkit-scrollbar{
+    display: none;
+}
+.result header,
+.detail-table-container header{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+}
+.result header h2,
+.detail-table-container header h2{
+    flex: 33.33%;
+    text-align: center;
+    margin:0 .5px;
+    background: #222831;
+    color: #fff;
+    
+}
+.result header h2:nth-child(1){
+    border-top-left-radius: 5px;
+}
+.result header h2:nth-child(3){
+    border-top-right-radius: 5px;
+}
+.result table,
+.detail-table{
+    width: 100%;
+    text-align: center;
+    
+}
+.result table tr,
+.detail-table tr{
+    color: #fff;
+    background: #222831;   
+    
+}
+.result table tr:nth-child(odd),
+.detail-table tr:nth-child(odd){
+    background: #1cc483;
+    color: #fff;
+}
+.result table tr td,
+.detail-table tr td{
+    width: 33.33%;
+    padding: .2rem 0;
+}
+.result table tr td:nth-child(2),
+.detail-table tr td:nth-child(2){
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+.table-container{
+    transform: translateX(200%);
+    transition: transform .3s;
+}
+.table-container.active{
+    transform: translateX(0);
+    transition: transform .3s;
+}
+.detail-table-wrap{
+    margin-top: 2rem;
+}
+.detail-table-wrap{
+    margin-top: 2rem;
+}
+.resultMsgs{
+    position: relative;
+}
+.total-result,
+.deletMsg,
+.notSavedMsg{
+    background: #222831;
+    color: #fff;
+    width: 80%;
+    padding:1.5rem 1rem;
+    border-radius: 5px;
+    margin-top: 1rem;
+    transform: translateX(200%);
+    transition: transform .3s;
+    align-self: center;
+    position: absolute;
+}
+.notSavedMsg{
+    background: #1cc483;
+    color: #222831;
+    text-align: center;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+.total-result p{
+    align-self: start;
+}
+.total-result.active,
+.deletMsg.active,
+.notSavedMsg.active{
+    transform: translateX(0);
+    transition: transform .3s;
+}
+.total-result .buttons{
+    display: flex;
+    align-self: flex-end;
+    margin-top: 1rem;
+}
+.total-result .subBtn{
+    cursor: pointer;
+    padding: 0;
+    padding: .3rem .5rem;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+
+.forms{
+    color: #DDDDDD; 
+    height: 100%;
+    border-radius: 5px;
+    position: relative;
+    z-index: 1000;
+}
+.forms form{
+    background: #222831;
+    padding: 1rem;
+    height: 100%;
+    border-radius: 5px;
+    position: absolute;
+    transform: translateX(-2000px);
+    transition: transform .3s ease-in-out;
+}
+.forms form.active{
+    transform: translateX(0);
+    transition: transform .3s ease-in-out;
+}
+.forms form > *{
+    margin:.5rem 0;
+}
+.wrapper > *{
+    margin:.3rem 0;
+}
+.wrapper:nth-child(1) p{
+    display: none;
+}
+.forms form input,
+.forms form label{
+    align-self: center;
+    border-radius: 5px;
+    padding: .2rem;
+    margin-left: 1rem;
+}
+.forms .btn{
+    align-self: center;
+    padding: .3rem .5rem;
+    font-size: 1.1rem;
+}
+.delet-item .subBtn{
+    margin-left: .5rem;
+}
+input[type="text"],
+input[type="date"]{
+    min-height: 20px;
+}
+@media screen and (min-width:1000px){
+    .main{
+        width: 80%;
+        margin: 0 auto;
+    }
+}
+@media screen and (max-width:760px){
+    
+    .main{
+        grid-template-columns: 1fr;
+        height: 100%;
+        width: 100%;
+        align-items: flex-start;
+        position: relative;   
+    }
+    .forms{
+        width: 80%;
+        margin:0 auto;
+        min-height: 400px;
+        margin-bottom: 1rem;
+        grid-row: 2/3;
+        transform: translateY(0);
+        transition: transform .3s;
+    }
+    .forms.moveUp{
+        transform: translateY(-180px);
+        transition: transform .3s;
+    }
+    .forms.moveUpUp{
+        transform: translateY(-380px);
+        transition: transform .3s;
+    }
+    .forms .calc-item{
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    .forms .add-item,
+    .forms .delet-item{
+        width: 50%;
+        margin:0 auto;
+        height: 300px;
+    }
+    .wrapper:nth-child(1) p{
+        display: initial;
+        padding: .5rem 0;
+    }
+        
+    
+}
+@media screen and (max-width:650px){
+    .forms.moveUp{
+        transform: translateY(-150px);
+        transition: transform .3s;
+    }
+    .forms.moveUpUp{
+        transform: translateY(-350px);
+        transition: transform .3s;
+    }
+    .forms .add-item,
+    .forms .delet-item{
+        width: 70%;
+        margin:0 auto;
+        height: 300px;
+    }
+    .forms input,
+    .forms label{
+        margin-left: 0;
+    }
+    .delet-item .subBtn{
+        margin-left: .5rem;
+    }
+
+
+}
+
+@media screen and (max-width:480px){
+    .main-header{
+        justify-content: space-around;
+        padding: 1rem 0;
+        align-items: center;
+        min-height: 70px;
+    }
+    .hamMenu{
+        padding: .1rem;
+        cursor: pointer;
+    }
+    .hamMenu .bar{
+        width: 20px;
+        height: 3px;
+        background: #fff;
+        display: block;
+        margin: 5px;
+        transition: all .3s;
+    }
+    .hamMenu.active .bar:nth-child(2){
+        opacity: 0;
+    }
+    .hamMenu.active .bar:nth-child(1){
+        transform: translateY(8px) rotate(45deg);
+    }
+    .hamMenu.active .bar:nth-child(3){
+        transform: translateY(-8px) rotate(-45deg);
+    }
+    .navBar{
+        position: absolute;
+        top: 70px;
+        z-index: 2000;
+        transform: translateY(-1000px);
+        transition: transform .3s;
+        border-top: 1px solid #1cc483;
+    }
+    .navBar.active{
+        transform: translateY(0);
+        transition: transform .3s;
+    }
+    .menu{
+        flex-direction: column;
+        align-items: center;
+    }
+    .forms.moveUp{
+        transform: translateY(-130px);
+        transition: transform .3s;
+    }
+    .forms.moveUpUp{
+        transform: translateY(-330px);
+        transition: transform .3s;
+    }
+    .forms .add-item,
+    .forms .delet-item{
+        width: 90%;
+        margin:0 auto;
+        height: 300px;
+    }
+    .forms .calc-item{
+        flex-direction: column;
+        align-items: center;
+        min-height: 520px;
+    }
+    
+    
+}
+@media screen and (max-width:350px){
+    .forms .add-item,
+    .forms .delet-item{
+        width: 100%;
+        margin:0 auto;
+        height: 300px;
+    }
+    
+
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expence tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <h2>Expence tracker</h2>
+        <div class="hamMenu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </div>
+        
+    </header>
+    <nav class="navBar">
+        <ul class="menu">
+            <li><button class="menu-btn active">Add Item</button></li>
+            <li><button class="menu-btn">Calc Total</button></li>
+            <li><button class="menu-btn">Delete Items</button></li>
+        </ul>
+    </nav>
+
+    <section class="main">
+        <section class="forms">
+            <form class="add-item active">
+                <label for="">Name:</label>
+                <input type="text" id="addName" required>
+
+                <label for="">Cost:</label>
+                <input type="text" id="addCost" required>
+
+
+                <input type="submit" value="Add" class="btn">
+            </form>
+            <form class="calc-item">
+                <div class="wrapper">
+                    <p>See your total expences on:</p>
+                    <div class="subBtn calcExactDate">today</div>
+                    <div class="subBtn calcExactDate">yesterday</div>
+                    <div class="subBtn calcExactDate">This Week</div>
+                    <div class="subBtn calcExactDate">Last Week</div>
+                    <div class="subBtn calcExactDate">This Mounth</div>
+                    <div class="subBtn calcExactDate">Last Mounth</div>
+
+                </div>
+                <div class="wrapper">
+                    <label for="specificDate">Or choose a specific date to see your total expences on that day:</label>
+                    <input type="date" id="specificDate" required>
+                    <input type="submit" value="Calc" class="btn specificDateBtn">
+
+                </div>
+            </form>
+            <form class="delet-item">
+                <label for="dateToDelete">Choose a date to delete all the items of that day:</label>
+                <input type="date" id="dateToDelete">
+                <input type="submit" value="Delete" class="btn">
+
+                <p>or clear the history:</p>
+                <div class="subBtn clearBtn">Clear</div>
+            </form>
+
+        </section>
+
+        <section class="result">
+            <div class="table-container">
+                <header>
+                    <h2>Name</h2>
+                    <h2>Date</h2>
+                    <h2>Cost</h2>
+                </header>
+                <table class="mainTable">
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>1</td>
+                        <td>1</td>
+                    </tr>
+
+                </table>
+            </div>
+            <section class="notSavedMsg">
+                <p>Today you have not saved any item so far.</p>
+            </section>
+            <section class="resultMsgs">
+                <div class="total-result">
+                    <p>your total amount of expence is blah blah</p>
+                    <div class="buttons">
+                        <button class="subBtn details">Details</button>
+                        <button class="subBtn closeResult">close</button>
+                    </div>
+                </div>
+                <div class="deletMsg">
+                    <p>all items are now deleted.</p>
+                </div>
+            </section>
+        </section>
+
+    </section>
+
+
+
+    <footer class="main-footer">
+        <h2>there 's nothing about us.</h2>
+    </footer>
+    <script src="main.js"></script>
+</body>
+
+</html>
