@@ -195,6 +195,7 @@ nav ul li button.active,
 }
 .resultMsgs{
     position: relative;
+    
 }
 .total-result,
 .deletMsg,
@@ -217,6 +218,7 @@ nav ul li button.active,
     font-weight: 700;
     font-size: 1.3rem;
 }
+
 .total-result p{
     align-self: start;
 }
@@ -224,6 +226,21 @@ nav ul li button.active,
 .deletMsg.active,
 .notSavedMsg.active{
     transform: translateX(0);
+    transition: transform .3s;
+}
+.total-result.down,
+.deletMsg.down{
+    transform: translateX(200%) translateY(310px);
+    transition: transform .3s;
+}
+.total-result.down.active,
+.deletMsg.down.active{
+    transform: translateX(0) translateY(310px);
+    transition: transform .3s;
+}
+
+.notSavedMsg.active.scale{
+    transform: scale(1.2);
     transition: transform .3s;
 }
 .total-result .buttons{
@@ -328,6 +345,7 @@ input[type="date"]{
         display: initial;
         padding: .5rem 0;
     }
+
         
     
 }

@@ -7,7 +7,8 @@ const calculationForm = document.querySelector('.calc-item');
 const deletionForm = document.querySelector('.delet-item');
 const formContainer = document.querySelector('.forms');
 
-const tottalResultAlert = document.querySelector('.total-result');
+const totalAlert = document.querySelector('.total-result');
+
 const deletionAlert = document.querySelector('.deletMsg');
 const notSavedAnyItemAlert = document.querySelector('.notSavedMsg');
 
@@ -66,7 +67,10 @@ function checkTodayStorage() {
 /*############################# manipulating DOM ##################################*/
 /*############################# manipulating DOM ##################################*/
 /*############################# manipulating DOM ##################################*/
-if(onTablet) formContainer.style.transform = localStorage.getItem("formTranslate");
+let tableHeigth = mainTableContainer.getBoundingClientRect().height;
+localStorage.setItem("formTranslate", `translateY(${tableHeigth - 100}px)`);
+if (onTablet) formContainer.style.transform = localStorage.getItem("formTranslate");
+
 (!todayItems.length) ? tellUserThereIsNoSavedItem() : showTheTableToUser();
 
 hambergerMenu.addEventListener('click', () => {
@@ -98,7 +102,7 @@ function changeTheForm() {
 
     if (onMobile) toggleNaberMenu();
 
-    tottalResultAlert.classList.remove('active');
+    totalAlert.classList.remove('active');
     deletionAlert.classList.remove('active');
 
     if (currentMenu === 'Calc Total') {
@@ -125,21 +129,34 @@ function changeTheForm() {
 
     }
 
+    if(onTablet){
+        if(!todayItems.length){
+            tellUserThereIsNoSavedItem();
+            return;
+        }
+        let preTranslate = localStorage.getItem('formTranslate');
+        setTimeout(() => {
+            formContainer.style.transform = preTranslate;
+        }, 1000);
+    }
     
+
+
 }
 
 function tellUserThereIsNoSavedItem() {
 
     mainTableContainer.classList.remove('active');
-
+    totalAlert.classList.remove('active');
+    let alertBoxHeight = notSavedAnyItemAlert.getBoundingClientRect().height;
     setTimeout(() => {
         notSavedAnyItemAlert.classList.add('active');
-        formContainer.style.transform = `translateY(${10}px)`
+        formContainer.style.transform = `translateY(${alertBoxHeight - 70}px)`
     }, 500);
 
 }
 function showTheTableToUser() {
-    
+
     notSavedAnyItemAlert.classList.remove('active');
     setTimeout(() => {
         mainTableContainer.classList.add('active');
@@ -150,11 +167,12 @@ function toggleNaberMenu() {
     hambergerMenu.classList.toggle('active');
     navBar.classList.toggle('active');
 }
-function moveForm(height){
-    if(!onTablet) return;
-    formContainer.style.transform = `translateY(${height-20}px)`;
-    localStorage.setItem("formTranslate", `translateY(${height-20}px)`)   
-    
+function moveForm(height) {
+    if (!onTablet) return;
+    formContainer.style.transform = `translateY(${height - 100}px)`;
+
+    localStorage.setItem("formTranslate", `translateY(${height - 100}px)`);
+
 }
 
 /*################### adding new Items #########################*/
@@ -172,8 +190,8 @@ const validationP = document.querySelector('.add-item p');
 
 additionForm.addEventListener('submit', (e) => {
     e.preventDefault();
-     
-    if(!Number(itemCostInput.value)){
+
+    if (!Number(itemCostInput.value)) {
         validationP.textContent = "Please enter a valid number!";
         clearInputs();
         setTimeout(() => {
@@ -181,7 +199,7 @@ additionForm.addEventListener('submit', (e) => {
         }, 2000);
         return;
     }
-    
+
     const name = itemNameInput.value;
     const date = todayDate;
     const cost = itemCostInput.value;
@@ -200,11 +218,11 @@ additionForm.addEventListener('submit', (e) => {
         showTheTableToUser();
 
     let tableHeigth = mainTableContainer.getBoundingClientRect().height;
-    if(tableHeigth < 300) moveForm(tableHeigth);
+    if (tableHeigth <= 300) moveForm(tableHeigth);
 
-    clearInputs();   
+    clearInputs();
 })
-function clearInputs(){
+function clearInputs() {
     itemNameInput.value = "";
     itemCostInput.value = "";
     itemNameInput.focus();
@@ -251,7 +269,7 @@ function initilizedTable() {
         updateTable(item.name, item.date, item.cost, count);
     }
     if (!todayItems.length)
-        tellUserThereIsNoSavedItem();     
+        tellUserThereIsNoSavedItem();
 }
 
 
@@ -263,12 +281,95 @@ function singleDeletion(index) {
     initilizedTable();
 
     let tableHeigth = mainTableContainer.getBoundingClientRect().height;
-    if(tableHeigth < 300) moveForm(tableHeigth);
+    if (tableHeigth < 300) moveForm(tableHeigth);
 
     if (totOfitems[removed.date]) {
         totOfitems[removed.date] -= Number(removed.cost);
         localStorage.setItem("totOfitems", JSON.stringify(totOfitems));
     }
+}
+/*######################## calc total ##########################*/
+/*######################## calc total ##########################*/
+/*######################## calc total ##########################*/
+/*######################## calc total ##########################*/
+/*######################## calc total ##########################*/
+/*######################## calc total ##########################*/
+//const totalAlert = document.querySelector('.total-result');
+const totalAlertP = document.querySelector('.total-result p');
+const totalClose = document.querySelector('.closeResult');
+const totalDetail = document.querySelector('details');
+// current calcBtn
+let crCalcBtn;
+let totalHeigth;
+const calcBtns = Array.from(document.querySelectorAll('.calcExactDate'));
+calcBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        crCalcBtn = btn.textContent;
+        calcChosenTimeTotal()
+    })
+})
+
+function calcChosenTimeTotal() {
+    let total;
+    if (crCalcBtn === 'Today') {
+        total = totOfitems[todayDate];
+    }
+    sendTotalMsg(total);
+}
+
+function sendTotalMsg(total) {
+    let msg;
+    if (!total) {
+        if (crCalcBtn === 'Today') {
+            tellUserThereIsNoSavedItem();
+            notSavedAnyItemAlert.classList.add('scale');
+            setTimeout(() => {
+                notSavedAnyItemAlert.classList.remove('scale');;
+            }, 500);
+            return;
+        }
+        msg = `${crCalcBtn} you did not saved any item.`;
+        if (crCalcBtn === 'This Week' || crCalcBtn === 'This Month')
+            msg = `${crCalcBtn} you have not saved any item so far.`;
+
+        totalAlertP.textContent = msg;
+        if (onTablet)
+            notSavedAnyItemAlert.classList.remove('active');
+        showTotalMessage();
+        return;
+    }
+    msg = `${crCalcBtn} total amount of your expences till now is ${total}.`;
+    if (crCalcBtn === 'Yesterday' || crCalcBtn === 'Last Week' || crCalcBtn === 'Last Month')
+        msg = `${crCalcBtn} total amount of your expences was ${total}.`;
+    totalAlertP.textContent = msg;
+    showTotalMessage();
+}
+
+totalClose.addEventListener('click', () => {
+    totalAlert.classList.remove('active');
+    if (!todayItems.length) {
+        tellUserThereIsNoSavedItem();
+        return;
+    }
+
+    if (onTablet) {
+        let preTranslate = localStorage.getItem('formTranslate');
+        formContainer.style.transform = preTranslate;
+    }
+
+})
+
+function showTotalMessage() {
+    if (onTablet) {
+        totalHeigth = totalAlert.getBoundingClientRect().height;
+        formContainer.style.transform = `translateY(${totalHeigth}px)`;
+        totalAlert.classList.add('active');
+        return;
+    }
+    totalAlert.classList.add('down');
+    setTimeout(() => {
+        totalAlert.classList.add('active');
+    }, 500);
 }
 
 
