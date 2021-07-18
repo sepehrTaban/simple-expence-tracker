@@ -333,20 +333,24 @@ function calcChosenTimeTotal() {
         if (!yesterdayDate) yesterdayDate = getYesterdayDate();
         total = totOfitems[yesterdayDate];
     }
-    if(crCalcBtn === 'This Week'){
+    if (crCalcBtn === 'This Week') {
         if (!thisWeekDays) thisWeekDays = getDaysBeforTodayInWeek();
         total = checkEachDateAndAddToTotal(thisWeekDays);
     }
-    if(crCalcBtn === 'Last Week'){
+    if (crCalcBtn === 'Last Week') {
         if (!LastWeekDays) LastWeekDays = getDaysOfLastWeek();
         total = checkEachDateAndAddToTotal(LastWeekDays);
+    }
+    if (crCalcBtn === 'This Month') {
+        if (!thisMounthDays) thisMounthDays = getDaysBeforTodayInMounth();
+        total = checkEachDateAndAddToTotal(thisMounthDays);
     }
 
 
     sendTotalMsg(total);
 }
 
-function checkEachDateAndAddToTotal(dates){
+function checkEachDateAndAddToTotal(dates) {
     let total = 0;
     for (let day of dates) {
         if (totOfitems[day]) {
@@ -368,21 +372,32 @@ function sendTotalMsg(total) {
             return;
         }
         msg = `${crCalcBtn} you did not saved any item.`;
-        if (crCalcBtn === 'This Week' || crCalcBtn === 'This Month')
-            msg = `${crCalcBtn} you have not saved any item so far.`;
-
+        switch (crCalcBtn) {
+            case 'This Week':
+            case 'This Month':
+                msg = `${crCalcBtn} you have not saved any item so far.`;
+        }
         totalAlertP.textContent = msg;
+
         if (onTablet)
             notSavedAnyItemAlert.classList.remove('active');
+
         showTotalMessage();
         return;
     }
-    msg = `${crCalcBtn} total amount of your expences till now is ${total}.`;
-    if (crCalcBtn === 'Yesterday' || crCalcBtn === 'Last Week' || crCalcBtn === 'Last Month')
-        msg = `${crCalcBtn} total amount of your expences was ${total}.`;
+    addComa(total)
+    msg = `${crCalcBtn} total amount of your expences till now is ${addComa(total)}$ .`;
+    switch (crCalcBtn) {
+        case 'Yesterday':
+        case 'Last Week':
+        case 'Last Month':
+            msg = `${crCalcBtn} total amount of your expences was ${addComa(total)}$ .`;
+    }
     totalAlertP.textContent = msg;
+
     if (onTablet)
         notSavedAnyItemAlert.classList.remove('active');
+
     showTotalMessage();
 }
 
@@ -403,8 +418,8 @@ totalClose.addEventListener('click', () => {
 function showTotalMessage() {
     if (onTablet) {
         let totalHeigth = totalAlert.getBoundingClientRect().height + tableHeigth;
-        
-        
+
+
         formContainer.style.transform = `translateY(${totalHeigth - 50}px)`;
         totalAlert.classList.add('active');
         return;
@@ -413,6 +428,15 @@ function showTotalMessage() {
     setTimeout(() => {
         totalAlert.classList.add('active');
     }, 500);
+}
+
+function addComa(total) {
+    return total.toString()
+        .split("")
+        .reverse()
+        .map((item, index) => ((index + 1) % 3 === 0) ? `,${item}` : item)
+        .reverse()
+        .join("");
 }
 
 
@@ -463,14 +487,14 @@ function getDaysBeforTodayInWeek() {
     let count = new Date().getDay();
     let date = new Date().getDate();
     let array = [];
-    
-    let lastMonth = (todayMonth === 1) ? 12 : todayMonth - 1;   
+
+    let lastMonth = (todayMonth === 1) ? 12 : todayMonth - 1;
     let lastyear = todayYear - 1;
 
     while (count > -1) {
         let item;
         let day;
-        if(date < 1){
+        if (date < 1) {
             switch (lastMonth) {
                 case 11:
                 case 9:
@@ -490,7 +514,7 @@ function getDaysBeforTodayInWeek() {
             date--;
             count--;
             continue;
-        } 
+        }
         day = (date < 10) ? `0${date}` : date;
         item = (todayMonth < 10) ? `${todayYear}-0${todayMonth}-${day}` : `${todayYear}-${todayMonth}-${day}`;
         array.push(item);
@@ -508,7 +532,7 @@ function getDaysOfLastWeek() {
     let date = new Date().getDate();
 
 
-    
+
     let lastMonth = (todayMonth === 1) ? 12 : todayMonth - 1;
     let lastyear = todayYear - 1;
 
@@ -545,6 +569,19 @@ function getDaysOfLastWeek() {
     }
     return array;
 }
+
+function getDaysBeforTodayInMounth() {
+
+    let date = new Date().getDate();
+    let array = [];
+    while (date > 0) {
+        let item = (date < 10) ? todayDate.slice(0, 8) + `0${date}` : todayDate.slice(0, 8) + date;
+        array.push(item);
+        date--;
+    }
+    return array;
+}
+
 
 
 
