@@ -337,6 +337,11 @@ function calcChosenTimeTotal() {
         if (!thisWeekDays) thisWeekDays = getDaysBeforTodayInWeek();
         total = checkEachDateAndAddToTotal(thisWeekDays);
     }
+    if(crCalcBtn === 'Last Week'){
+        if (!LastWeekDays) LastWeekDays = getDaysOfLastWeek();
+        total = checkEachDateAndAddToTotal(LastWeekDays);
+    }
+
 
     sendTotalMsg(total);
 }
@@ -494,5 +499,52 @@ function getDaysBeforTodayInWeek() {
     }
     return array;
 }
+
+
+function getDaysOfLastWeek() {
+    let array = [];
+    let today = new Date().getDay();
+    let count = today + 7;
+    let date = new Date().getDate();
+
+
+    
+    let lastMonth = (todayMonth === 1) ? 12 : todayMonth - 1;
+    let lastyear = todayYear - 1;
+
+    while (count > today) {
+        let item;
+        let day = date - count;
+        //if this condition is true, we have to get the dates of last month
+        if (day <= 0) {
+
+            //this switch is used becuse some months are 31 days some are 30 and feburary is 28!;  
+            switch (lastMonth) {
+                case 11:
+                case 9:
+                case 6:
+                case 4:
+                    day = 30 + day;
+                    break;
+                case 2:
+                    day = 28 + day;
+                    break;
+                default:
+                    day = 31 + day;
+            }
+            item = (lastMonth < 10) ? `-0${lastMonth}-${day}` : `-${lastMonth}-${day}`;
+            item = (lastMonth === 12) ? lastyear + item : todayYear + item;
+
+        } else {
+            day = (day < 10) ? `0${day}` : day;
+            item = (todayMonth < 10) ? `${todayYear}-0${todayMonth}-${day}` : `${todayYear}-${todayMonth}-${day}`;
+
+        }
+        array.push(item);
+        count--;
+    }
+    return array;
+}
+
 
 
