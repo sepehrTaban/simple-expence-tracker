@@ -333,8 +333,22 @@ function calcChosenTimeTotal() {
         if (!yesterdayDate) yesterdayDate = getYesterdayDate();
         total = totOfitems[yesterdayDate];
     }
+    if(crCalcBtn === 'This Week'){
+        if (!thisWeekDays) thisWeekDays = getDaysBeforTodayInWeek();
+        total = checkEachDateAndAddToTotal(thisWeekDays);
+    }
 
     sendTotalMsg(total);
+}
+
+function checkEachDateAndAddToTotal(dates){
+    let total = 0;
+    for (let day of dates) {
+        if (totOfitems[day]) {
+            total += totOfitems[day];
+        }
+    }
+    return total;
 }
 
 function sendTotalMsg(total) {
@@ -439,4 +453,46 @@ function getYesterdayDate() {
     finalDate = (todayMonth < 10) ? `${todayYear}-0${todayMonth}${finalDate}` : todayYear + todayMonth + finalDate;
     return finalDate;
 }
+
+function getDaysBeforTodayInWeek() {
+    let count = new Date().getDay();
+    let date = new Date().getDate();
+    let array = [];
+    
+    let lastMonth = (todayMonth === 1) ? 12 : todayMonth - 1;   
+    let lastyear = todayYear - 1;
+
+    while (count > -1) {
+        let item;
+        let day;
+        if(date < 1){
+            switch (lastMonth) {
+                case 11:
+                case 9:
+                case 6:
+                case 4:
+                    day = 30 + date;
+                    break;
+                case 2:
+                    day = 28 + date;
+                    break;
+                default:
+                    day = 31 + date;
+            }
+            item = (lastMonth < 10) ? `-0${lastMonth}-${day}` : `-${lastMonth}-${day}`;
+            item = (lastMonth === 12) ? lastyear + item : todayYear + item;
+            array.push(item);
+            date--;
+            count--;
+            continue;
+        } 
+        day = (date < 10) ? `0${date}` : date;
+        item = (todayMonth < 10) ? `${todayYear}-0${todayMonth}-${day}` : `${todayYear}-${todayMonth}-${day}`;
+        array.push(item);
+        count--;
+        date--;
+    }
+    return array;
+}
+
 
