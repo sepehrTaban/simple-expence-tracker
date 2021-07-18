@@ -210,6 +210,7 @@ nav ul li button.active,
     transition: transform .3s;
     align-self: center;
     position: absolute;
+    
 }
 .notSavedMsg{
     background: #1cc483;
@@ -228,10 +229,16 @@ nav ul li button.active,
     transform: translateX(0);
     transition: transform .3s;
 }
+.total-result,
+.deletMsg{
+    top: -300px;
+}
+
 .total-result.down,
 .deletMsg.down{
     transform: translateX(200%) translateY(310px);
     transition: transform .3s;
+    
 }
 .total-result.down.active,
 .deletMsg.down.active{
@@ -344,6 +351,10 @@ input[type="date"]{
     .wrapper:nth-child(1) p{
         display: initial;
         padding: .5rem 0;
+    }
+    .total-result,
+    .deletMsg{
+        top: 0;
     }
 
         

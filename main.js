@@ -15,6 +15,13 @@ const notSavedAnyItemAlert = document.querySelector('.notSavedMsg');
 const hambergerMenu = document.querySelector('.hamMenu');
 const navBar = document.querySelector('.navBar');
 
+/*********/
+const todayYear = new Date().getFullYear();
+const todayMonth = new Date().getMonth() + 1;
+const todayDay = new Date().getDate();
+
+/*********/
+
 
 
 const mainTableContainer = document.querySelector('.table-container');
@@ -129,8 +136,8 @@ function changeTheForm() {
 
     }
 
-    if(onTablet){
-        if(!todayItems.length){
+    if (onTablet) {
+        if (!todayItems.length) {
             tellUserThereIsNoSavedItem();
             return;
         }
@@ -139,7 +146,7 @@ function changeTheForm() {
             formContainer.style.transform = preTranslate;
         }, 1000);
     }
-    
+
 
 
 }
@@ -188,6 +195,7 @@ const validationP = document.querySelector('.add-item p');
 
 
 
+
 additionForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
@@ -217,7 +225,7 @@ additionForm.addEventListener('submit', (e) => {
     if (todayItems.length === 1)
         showTheTableToUser();
 
-    let tableHeigth = mainTableContainer.getBoundingClientRect().height;
+    tableHeigth = mainTableContainer.getBoundingClientRect().height;
     if (tableHeigth <= 300) moveForm(tableHeigth);
 
     clearInputs();
@@ -280,7 +288,7 @@ function singleDeletion(index) {
 
     initilizedTable();
 
-    let tableHeigth = mainTableContainer.getBoundingClientRect().height;
+    tableHeigth = mainTableContainer.getBoundingClientRect().height;
     if (tableHeigth < 300) moveForm(tableHeigth);
 
     if (totOfitems[removed.date]) {
@@ -300,7 +308,7 @@ const totalClose = document.querySelector('.closeResult');
 const totalDetail = document.querySelector('details');
 // current calcBtn
 let crCalcBtn;
-let totalHeigth;
+//let totalHeigth;
 const calcBtns = Array.from(document.querySelectorAll('.calcExactDate'));
 calcBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -308,12 +316,24 @@ calcBtns.forEach(btn => {
         calcChosenTimeTotal()
     })
 })
+/***********************/
+let yesterdayDate;
+let thisWeekDays;
+let LastWeekDays;
+let thisMounthDays;
+let lastMounthDays;
+/***********************/
 
 function calcChosenTimeTotal() {
     let total;
     if (crCalcBtn === 'Today') {
         total = totOfitems[todayDate];
     }
+    if (crCalcBtn === 'Yesterday') {
+        if (!yesterdayDate) yesterdayDate = getYesterdayDate();
+        total = totOfitems[yesterdayDate];
+    }
+
     sendTotalMsg(total);
 }
 
@@ -342,6 +362,8 @@ function sendTotalMsg(total) {
     if (crCalcBtn === 'Yesterday' || crCalcBtn === 'Last Week' || crCalcBtn === 'Last Month')
         msg = `${crCalcBtn} total amount of your expences was ${total}.`;
     totalAlertP.textContent = msg;
+    if (onTablet)
+        notSavedAnyItemAlert.classList.remove('active');
     showTotalMessage();
 }
 
@@ -361,8 +383,10 @@ totalClose.addEventListener('click', () => {
 
 function showTotalMessage() {
     if (onTablet) {
-        totalHeigth = totalAlert.getBoundingClientRect().height;
-        formContainer.style.transform = `translateY(${totalHeigth}px)`;
+        let totalHeigth = totalAlert.getBoundingClientRect().height + tableHeigth;
+        
+        
+        formContainer.style.transform = `translateY(${totalHeigth - 50}px)`;
         totalAlert.classList.add('active');
         return;
     }
@@ -379,13 +403,40 @@ function showTotalMessage() {
 /*######################## getting Dates ##########################*/
 /*######################## getting Dates ##########################*/
 /*######################## getting Dates ##########################*/
-function getCurrentDate() {
-    let todayYear = new Date().getFullYear();
-    let todayMounth = new Date().getMonth() + 1;
-    let todayDay = new Date().getDate();
 
-    todayMounth = (todayMounth < 10) ? `0${todayMounth}` : todayMounth;
-    todayDay = (todayDay < 10) ? `0${todayDay}` : todayDay;
-    return [todayYear, todayMounth, todayDay].join("-");
+function getCurrentDate() {
+    let year = todayYear;
+    let month = todayMonth;
+    let day = todayDay;
+
+    month = (month < 10) ? `0${month}` : month;
+    day = (day < 10) ? `0${day}` : day;
+    return [year, month, day].join("-");
+}
+function getYesterdayDate() {
+    let day = todayDay - 1;
+    let finalDate;
+    let lastMonth = (todayMonth === 1) ? 12 : todayMonth - 1;
+    if (todayDay === 1) {
+        switch (lastMonth) {
+            case 11:
+            case 9:
+            case 6:
+            case 4:
+                day = 30;
+                break;
+            case 2:
+                day = 28;
+                break;
+            default:
+                day = 31;
+        }
+        finalDate = (lastMonth < 10) ? `-0${lastMonth}-${day}` : `-${lastMonth}-${day}`;
+        finalDate = (lastMonth === 12) ? todayYear - 1 + finalDate : todayYear + finalDate;
+        return finalDate;
+    }
+    finalDate = (day < 10) ? `-0${day}` : `-${day}`;
+    finalDate = (todayMonth < 10) ? `${todayYear}-0${todayMonth}${finalDate}` : todayYear + todayMonth + finalDate;
+    return finalDate;
 }
 
