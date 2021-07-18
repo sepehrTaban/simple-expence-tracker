@@ -322,6 +322,7 @@ let thisWeekDays;
 let LastWeekDays;
 let thisMounthDays;
 let lastMounthDays;
+//let specificDate;
 /***********************/
 
 function calcChosenTimeTotal() {
@@ -344,6 +345,10 @@ function calcChosenTimeTotal() {
     if (crCalcBtn === 'This Month') {
         if (!thisMounthDays) thisMounthDays = getDaysBeforTodayInMounth();
         total = checkEachDateAndAddToTotal(thisMounthDays);
+    }
+    if (crCalcBtn === 'Last Month') {
+        if (!lastMounthDays) lastMounthDays = getDaysOfLastMonth();
+        total = checkEachDateAndAddToTotal(lastMounthDays);
     }
 
 
@@ -385,7 +390,7 @@ function sendTotalMsg(total) {
         showTotalMessage();
         return;
     }
-    addComa(total)
+    
     msg = `${crCalcBtn} total amount of your expences till now is ${addComa(total)}$ .`;
     switch (crCalcBtn) {
         case 'Yesterday':
@@ -580,6 +585,26 @@ function getDaysBeforTodayInMounth() {
         date--;
     }
     return array;
+}
+
+function getDaysOfLastMonth() {
+
+    let array = [];
+   
+    let lastMonth = (todayMonth === 1) ? 12 : todayMonth - 1;    
+    let lastyear = todayYear - 1;
+
+    for (let i = 1; i < 32; i++) {
+
+        let item = (lastMonth < 10) ? `-0${lastMonth}-` : `-${lastMonth}-`;
+        item += (i < 10) ? `0${i}` : i;
+        item = (lastMonth === 12) ? lastyear + item : todayYear + item;
+
+        array.push(item);
+    }
+    return array;
+
+
 }
 
 
