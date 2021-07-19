@@ -322,8 +322,20 @@ let thisWeekDays;
 let LastWeekDays;
 let thisMounthDays;
 let lastMounthDays;
-//let specificDate;
+let specificDate;
 /***********************/
+const specificDateInput = document.querySelector('#specificDate');
+calculationForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    specificDate = specificDateInput.value;
+    let total = totOfitems[specificDate];
+    crCalcBtn = specificDate;
+    if (specificDate === todayDate)
+        crCalcBtn = 'Today';
+    if (specificDate === getYesterdayDate())
+        crCalcBtn = 'Yesterday';
+    sendTotalMsg(total)
+})
 
 function calcChosenTimeTotal() {
     let total;
@@ -382,6 +394,8 @@ function sendTotalMsg(total) {
             case 'This Month':
                 msg = `${crCalcBtn} you have not saved any item so far.`;
         }
+        if (/[0-9]/.test(crCalcBtn))
+            msg = `You did not save any item on date ${crCalcBtn}`;
         totalAlertP.textContent = msg;
 
         if (onTablet)
@@ -390,14 +404,16 @@ function sendTotalMsg(total) {
         showTotalMessage();
         return;
     }
-    
-    msg = `${crCalcBtn} total amount of your expences till now is ${addComa(total)}$ .`;
+    total = addComa(total);
+    msg = `${crCalcBtn} total amount of your expences till now is ${total}$ .`;
     switch (crCalcBtn) {
         case 'Yesterday':
         case 'Last Week':
         case 'Last Month':
-            msg = `${crCalcBtn} total amount of your expences was ${addComa(total)}$ .`;
+            msg = `${crCalcBtn} total amount of your expences was ${total}$ .`;
     }
+    if (/[0-9]/.test(crCalcBtn))
+        msg = `On date ${crCalcBtn}, the total amount of your expences was ${total}$ .`;
     totalAlertP.textContent = msg;
 
     if (onTablet)
@@ -436,10 +452,11 @@ function showTotalMessage() {
 }
 
 function addComa(total) {
+    let last = total.toString().length - 1;
     return total.toString()
         .split("")
         .reverse()
-        .map((item, index) => ((index + 1) % 3 === 0) ? `,${item}` : item)
+        .map((item, index) => ((index + 1) % 3 === 0 && index !== last) ? `,${item}` : item)
         .reverse()
         .join("");
 }
@@ -590,8 +607,8 @@ function getDaysBeforTodayInMounth() {
 function getDaysOfLastMonth() {
 
     let array = [];
-   
-    let lastMonth = (todayMonth === 1) ? 12 : todayMonth - 1;    
+
+    let lastMonth = (todayMonth === 1) ? 12 : todayMonth - 1;
     let lastyear = todayYear - 1;
 
     for (let i = 1; i < 32; i++) {
