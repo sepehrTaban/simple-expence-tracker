@@ -502,6 +502,10 @@ input[type="date"]{
     .mainTable tr td:nth-child(2){
         font-size: .9rem;
     }
+    .mainTable tr td:nth-child(1),
+    .mainTable tr td:nth-child(3){
+        font-size: 1rem;
+    }
     
     
 }
