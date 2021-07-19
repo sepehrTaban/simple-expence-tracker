@@ -128,6 +128,7 @@ nav ul li button.active,
     justify-content: center;
     position: sticky;
     top: 0;
+    z-index: 1000;
 }
 .result header h2,
 .detail-table-container header h2{
@@ -311,6 +312,46 @@ input[type="text"],
 input[type="date"]{
     min-height: 20px;
 }
+/*********************************************/
+.detail-table-container{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #334961;
+    transform: translateY(-200%);
+    transition: transform .3s;
+    top: 0;    
+    left: 0;
+    z-index: 3000;
+    padding: 0 2rem;
+}
+.detail-table-container.active{
+    transform: translateY(0);
+    transition: transform .3s;
+}
+.detail-table-container .btn{
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    /*padding: .5rem .5rem;*/
+    cursor: pointer;
+}
+.detail-table tr:nth-child(odd){
+    color: #222831;
+}
+.subBtn.details{
+    opacity: 1;
+    transition: all .3s;
+}
+
+.subBtn.details.hide{
+    opacity: 0;
+    transition: all .3s;
+}
+.subBtn.detail-close{
+    margin-top: 1rem;
+    font-size: 1.1rem;    
+}
+/***********************************************/
 @media screen and (min-width:1000px){
     .main{
         width: 80%;
@@ -374,6 +415,28 @@ input[type="date"]{
     .delet-item .subBtn{
         margin-left: .5rem;
     }
+    .detail-table-container{
+        padding: 0 1rem;
+    }
+    .mainTable tr td:nth-child(2){
+        flex-direction: column;
+        align-items: center;
+    }
+    .mainTable tr td:nth-child(1),
+    .mainTable tr td:nth-child(3){
+        font-size: 1.2rem;
+    }
+    .result .table-container{
+        max-height: 375px;
+    }
+    .result table tr td .subBtn{
+        padding: .2rem;
+        margin-top: .2rem;
+        font-size: .8rem;
+    }
+    .result header h2{
+        padding: .5rem 0;
+    }
 
 
 }
@@ -433,6 +496,12 @@ input[type="date"]{
         align-items: center;
         min-height: 520px;
     }
+    .detail-table-container{
+        padding: 0 .2rem;
+    }
+    .mainTable tr td:nth-child(2){
+        font-size: .9rem;
+    }
     
     
 }
@@ -442,6 +511,9 @@ input[type="date"]{
         width: 100%;
         margin:0 auto;
         height: 300px;
+    }
+    .detail-table-container .detail-table tr td:nth-child(2){
+        font-size: .8rem;
     }
     
 

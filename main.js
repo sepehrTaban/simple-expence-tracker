@@ -15,6 +15,11 @@ const notSavedAnyItemAlert = document.querySelector('.notSavedMsg');
 const hambergerMenu = document.querySelector('.hamMenu');
 const navBar = document.querySelector('.navBar');
 
+const detailTableContainer = document.querySelector('.detail-table-container');
+const detailTable = document.querySelector('.detail-table');
+const detailTableCloseBtn = document.querySelector('.detail-close');
+
+
 /*********/
 const todayYear = new Date().getFullYear();
 const todayMonth = new Date().getMonth() + 1;
@@ -226,7 +231,7 @@ additionForm.addEventListener('submit', (e) => {
         showTheTableToUser();
 
     tableHeigth = mainTableContainer.getBoundingClientRect().height;
-    if (tableHeigth <= 300) moveForm(tableHeigth);
+    if (tableHeigth <= 375) moveForm(tableHeigth);
 
     clearInputs();
 })
@@ -289,7 +294,7 @@ function singleDeletion(index) {
     initilizedTable();
 
     tableHeigth = mainTableContainer.getBoundingClientRect().height;
-    if (tableHeigth < 300) moveForm(tableHeigth);
+    if (tableHeigth < 375) moveForm(tableHeigth);
 
     if (totOfitems[removed.date]) {
         totOfitems[removed.date] -= Number(removed.cost);
@@ -305,7 +310,7 @@ function singleDeletion(index) {
 //const totalAlert = document.querySelector('.total-result');
 const totalAlertP = document.querySelector('.total-result p');
 const totalClose = document.querySelector('.closeResult');
-const totalDetail = document.querySelector('details');
+const totalDetail = document.querySelector('.details');
 // current calcBtn
 let crCalcBtn;
 //let totalHeigth;
@@ -363,8 +368,20 @@ function calcChosenTimeTotal() {
         total = checkEachDateAndAddToTotal(lastMounthDays);
     }
 
-
+    if (!total || crCalcBtn === 'Today')
+        hideShowDetainBtn('hide');
+    else hideShowDetainBtn('show');
     sendTotalMsg(total);
+}
+function hideShowDetainBtn(state) {
+    if (state === 'hide') {
+        totalDetail.classList.add('hide');
+        totalDetail.disabled = true;
+        return;
+    }
+    totalDetail.classList.remove('hide');
+    totalDetail.disabled = false;
+
 }
 
 function checkEachDateAndAddToTotal(dates) {
@@ -434,6 +451,8 @@ totalClose.addEventListener('click', () => {
         formContainer.style.transform = preTranslate;
     }
 
+    //hideShowDetainBtn('show');
+
 })
 
 function showTotalMessage() {
@@ -460,9 +479,83 @@ function addComa(total) {
         .reverse()
         .join("");
 }
+/*######################## showing details ##########################*/
+/*######################## showing details ##########################*/
+/*######################## showing details ##########################*/
+/*######################## showing details ##########################*/
+/*######################## showing details ##########################*/
+totalDetail.addEventListener('click', () => {
 
+    if (crCalcBtn === 'Yesterday') {
+        checkDates([yesterdayDate]);
+    }
+    if (crCalcBtn === 'This Week') {
+        checkDates(thisWeekDays);
+    }
+    if (crCalcBtn === 'Last Week') {
+        checkDates(LastWeekDays);
+    }
+    if (crCalcBtn === 'This Month') {
+        checkDates(thisMounthDays);
+    }
+    if (crCalcBtn === 'Last Month') {
+        checkDates(lastMounthDays);
+    }
+    if(/[0-9]/.test(crCalcBtn))
+    checkDates([specificDate]);
 
+})
 
+function checkDates(array) {
+    let match = false;
+
+    if (crCalcBtn === 'This Week' || crCalcBtn === 'This Month') {
+        updateDetailTable(todayItems);
+        if (todayItems.length) match = true;
+    }
+
+    for (let item of array) {
+        if (itemsOfPast[item]) {
+            updateDetailTable(itemsOfPast[item])
+            match = true;
+        }
+    }
+
+    if (!match) return;
+
+    setTimeout(() => {
+        detailTableContainer.classList.add('active');
+    }, 300);
+}
+
+function updateDetailTable(array) {
+    let count = 0;
+    while (count < array.length) {
+        let item = array[count];
+        let tr = document.createElement('tr');
+        let td1 = document.createElement('td');
+        let td2 = document.createElement('td');
+        let td3 = document.createElement('td');
+
+        td1.textContent = item.name;
+        td2.textContent = item.date;
+        td3.textContent = item.cost;
+
+        tr.appendChild(td1)
+        tr.appendChild(td2)
+        tr.appendChild(td3)
+
+        detailTable.appendChild(tr);
+
+        count++;
+    }
+
+}
+detailTableCloseBtn.addEventListener('click', () => {
+    detailTableContainer.classList.remove('active');
+    while (detailTable.firstChild)
+        detailTable.removeChild(detailTable.firstChild);
+})
 /*######################## getting Dates ##########################*/
 /*######################## getting Dates ##########################*/
 /*######################## getting Dates ##########################*/
