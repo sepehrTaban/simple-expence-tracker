@@ -1,5 +1,5 @@
-const onMobile = window.innerWidth < 500 || window.screen.width < 500;
-const onTablet = window.innerWidth < 760 || window.screen.width < 760;
+let onMobile = window.innerWidth < 500 || window.screen.width < 500;
+let onTablet = window.innerWidth < 860 || window.screen.width < 860;
 
 let currentMenu;
 const additionForm = document.querySelector('.add-item');
@@ -87,6 +87,21 @@ if (onTablet) formContainer.style.transform = localStorage.getItem("formTranslat
 
 
 (!todayItems.length) ? tellUserThereIsNoSavedItem() : showTheTableToUser();
+
+window.addEventListener('resize', () => {
+    onMobile = window.innerWidth < 500 || window.screen.width < 500;
+    onTablet = window.innerWidth < 860 || window.screen.width < 860;
+    console.log(onTablet);
+
+    let tableHeigth = mainTableContainer.getBoundingClientRect().height;
+    localStorage.setItem("formTranslate", `translateY(${tableHeigth - 100}px)`);
+    if (onTablet){
+        formContainer.style.transform = localStorage.getItem("formTranslate");
+        totalAlert.classList.remove('down');               
+    } 
+    else formContainer.style.transform = `translateY(${0}px)`
+
+})
 
 hambergerMenu.addEventListener('click', () => {
     toggleNaberMenu()
@@ -428,14 +443,14 @@ function sendTotalMsg(total) {
             }, 500);
             return;
         }
-        msg = `${crCalcBtn} you did not saved any item.`;
+        msg = `${crCalcBtn}, you did not saved any item.`;
         switch (crCalcBtn) {
             case 'This Week':
             case 'This Month':
-                msg = `${crCalcBtn} you have not saved any item so far.`;
+                msg = `${crCalcBtn}, you have not saved any item so far.`;
         }
         if (/[0-9]/.test(crCalcBtn))
-            msg = `You did not save any item on date ${crCalcBtn}`;
+            msg = `You did not save any item on date ${crCalcBtn}.`;
         totalAlertP.textContent = msg;
 
         if (onTablet)
@@ -445,12 +460,12 @@ function sendTotalMsg(total) {
         return;
     }
     total = addComa(total);
-    msg = `${crCalcBtn} total amount of your expences till now is ${total}$ .`;
+    msg = `${crCalcBtn}, the total amount of your expences till now is ${total}$ .`;
     switch (crCalcBtn) {
         case 'Yesterday':
         case 'Last Week':
         case 'Last Month':
-            msg = `${crCalcBtn} total amount of your expences was ${total}$ .`;
+            msg = `${crCalcBtn}, the total amount of your expences was ${total}$ .`;
     }
     if (/[0-9]/.test(crCalcBtn))
         msg = `On date ${crCalcBtn}, the total amount of your expences was ${total}$ .`;
@@ -481,6 +496,7 @@ function hideTotalMessage() {
 
 function showTotalMessage() {
     if (onTablet) {
+        tableHeigth = mainTableContainer.getBoundingClientRect().height
         let totalHeigth = totalAlert.getBoundingClientRect().height + tableHeigth;
 
         window.scrollTo(0, tableHeigth - 300);
