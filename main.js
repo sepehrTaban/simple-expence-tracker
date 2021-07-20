@@ -1,5 +1,5 @@
-const onMobile = window.innerWidth < 500;
-const onTablet = window.innerWidth < 760;
+const onMobile = window.innerWidth < 500 || window.screen.width < 500;
+const onTablet = window.innerWidth < 760 || window.screen.width < 760;
 
 let currentMenu;
 const additionForm = document.querySelector('.add-item');
