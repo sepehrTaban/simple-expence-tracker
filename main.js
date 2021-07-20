@@ -31,6 +31,7 @@ const todayDay = new Date().getDate();
 
 const mainTableContainer = document.querySelector('.table-container');
 const mainTable = document.querySelector('.mainTable');
+
 /*########################### stting for local storage ###############################*/
 /*########################### stting for local storage ###############################*/
 /*########################### stting for local storage ###############################*/
@@ -83,6 +84,7 @@ let tableHeigth = mainTableContainer.getBoundingClientRect().height;
 localStorage.setItem("formTranslate", `translateY(${tableHeigth - 100}px)`);
 if (onTablet) formContainer.style.transform = localStorage.getItem("formTranslate");
 
+
 (!todayItems.length) ? tellUserThereIsNoSavedItem() : showTheTableToUser();
 
 hambergerMenu.addEventListener('click', () => {
@@ -115,7 +117,7 @@ function changeTheForm() {
     if (onMobile) toggleNaberMenu();
 
     totalAlert.classList.remove('active');
-    deletionAlert.classList.remove('active');
+    //deletionAlert.classList.remove('active');
 
     if (currentMenu === 'Calc Total') {
         additionForm.classList.remove('active');
@@ -281,6 +283,7 @@ function initilizedTable() {
         let item = todayItems[count++];
         updateTable(item.name, item.date, item.cost, count);
     }
+    //tableHeigth = mainTableContainer.getBoundingClientRect().height;
     if (!todayItems.length)
         tellUserThereIsNoSavedItem();
 }
@@ -440,6 +443,9 @@ function sendTotalMsg(total) {
 }
 
 totalClose.addEventListener('click', () => {
+    hideTotalMessage();
+})
+function hideTotalMessage() {
     totalAlert.classList.remove('active');
     if (!todayItems.length) {
         tellUserThereIsNoSavedItem();
@@ -450,10 +456,7 @@ totalClose.addEventListener('click', () => {
         let preTranslate = localStorage.getItem('formTranslate');
         formContainer.style.transform = preTranslate;
     }
-
-    //hideShowDetainBtn('show');
-
-})
+}
 
 function showTotalMessage() {
     if (onTablet) {
@@ -501,8 +504,8 @@ totalDetail.addEventListener('click', () => {
     if (crCalcBtn === 'Last Month') {
         checkDates(lastMounthDays);
     }
-    if(/[0-9]/.test(crCalcBtn))
-    checkDates([specificDate]);
+    if (/[0-9]/.test(crCalcBtn))
+        checkDates([specificDate]);
 
 })
 
@@ -556,6 +559,98 @@ detailTableCloseBtn.addEventListener('click', () => {
     while (detailTable.firstChild)
         detailTable.removeChild(detailTable.firstChild);
 })
+/*###################### deleting items ####################*/
+/*###################### deleting items ####################*/
+/*###################### deleting items ####################*/
+/*###################### deleting items ####################*/
+/*###################### deleting items ####################*/
+const deletingForm = document.querySelector('.delet-item');
+const deletingInput = document.querySelector('#dateToDelete');
+let choosenDate;
+
+const deletionMsgP = document.querySelector('.deletMsg p');
+
+const clearBtn = document.querySelector('.clearBtn');
+
+clearBtn.addEventListener('click', () => {
+    choosenDate = null;
+    deleteItemsOfToday();
+    deletItemsOfPast();
+
+    sendDeletionMsg();
+})
+
+deletingForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    choosenDate = deletingInput.value;
+
+    if (choosenDate === todayDate) {
+        deleteItemsOfToday();
+        sendDeletionMsg();
+        return;
+    }
+
+    deletItemsOfPast();
+    sendDeletionMsg();
+})
+
+function sendDeletionMsg() {
+    let msg = `All items that were saved on ${choosenDate} are now deleted.`;
+    if (!choosenDate) msg = 'History cleared, All items are deleted.';
+    totalAlertP.textContent = msg;
+
+    totalClose.classList.add('hide');
+    totalDetail.classList.add('hide');
+    if (onTablet) notSavedAnyItemAlert.classList.remove('active');
+
+    setTimeout(() => {
+        showTotalMessage();
+    }, 500);
+
+    setTimeout(() => {
+        hideTotalMessage();
+        totalClose.classList.remove('hide');
+        totalDetail.classList.remove('hide');
+    }, 3000);
+}
+
+function deleteItemsOfToday() {
+    todayItems = [];
+    todayIndex = 0;
+    localStorage.setItem("todayItems", JSON.stringify(todayItems));
+    mainTableContainer.classList.remove('active');
+    while (mainTable.firstChild)
+        mainTable.removeChild(mainTable.firstChild);
+    tableHeigth = mainTableContainer.getBoundingClientRect().height;
+
+    if (totOfitems[choosenDate]) {
+        delete totOfitems[choosenDate];
+        localStorage.setItem("totOfitems", JSON.stringify(totOfitems));
+    }
+}
+function deletItemsOfPast() {
+    if (!choosenDate) {
+        totOfitems = {};
+        itemsOfPast = {};
+        localStorage.setItem("itemsOfPast", JSON.stringify(itemsOfPast));
+        localStorage.setItem("totOfitems", JSON.stringify(totOfitems));
+        return;
+    }
+
+    if (totOfitems[choosenDate]) {
+        delete totOfitems[choosenDate];
+        localStorage.setItem("totOfitems", JSON.stringify(totOfitems));
+    }
+
+    if (itemsOfPast[choosenDate]) {
+        delete itemsOfPast[choosenDate];
+        localStorage.setItem("itemsOfPast", JSON.stringify(itemsOfPast));
+    }
+}
+
+
+
 /*######################## getting Dates ##########################*/
 /*######################## getting Dates ##########################*/
 /*######################## getting Dates ##########################*/
