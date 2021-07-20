@@ -89,6 +89,7 @@ nav ul li button.active,
     padding: 1rem 0;
     background:#201d2f;
     color: #DDDDDD;
+    
 }
 .main{
     flex-grow: 1;
@@ -98,7 +99,8 @@ nav ul li button.active,
     height: 100%;
     width: 100%;
     align-items: flex-start;
-    position: relative;   
+    position: relative;
+    overflow-x: hidden;   
 }
 .forms,
 .result,
