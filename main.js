@@ -91,6 +91,19 @@ hambergerMenu.addEventListener('click', () => {
     toggleNaberMenu()
 })
 
+const subBtns = Array.from(document.querySelectorAll('.subBtn'));
+subBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+        
+        if(!onTablet) return;
+
+        btn.classList.add('hoverd');
+        setTimeout(() => {
+            btn.classList.remove('hoverd');
+        }, 500);
+    })
+})
+
 const menuBtns = Array.from(document.querySelectorAll('.menu-btn'));
 menuBtns.forEach(btn => {
     btn.addEventListener('click', () => {

@@ -76,6 +76,7 @@ nav ul li:hover button,
     transition: all .3s;
     cursor: pointer;
 }
+
 nav ul li button.active,
 .btn{
     background: #1cc483;
@@ -83,6 +84,7 @@ nav ul li button.active,
     border: 2px solid #fff;
     cursor: pointer;
 }
+
 .main-footer{
     padding: 1rem 0;
     background:#201d2f;
@@ -241,15 +243,6 @@ nav ul li button.active,
     transition: transform .3s;
     
 }
-/*.deletMsg.mindown{
-    transform: translateX(200%) translateY(75px);
-    transition: transform .3s;
-    
-}
-.deletMsg.mindown.active{
-    transform: translateX(0) translateY(100px);
-    transition: transform .3s;
-}*/
 .total-result.down.active,
 .deletMsg.down.active{
     transform: translateX(0) translateY(310px);
@@ -407,6 +400,28 @@ input[type="date"]{
     .deletMsg{
         top: 0;
     }
+    nav ul li:hover button,
+    .subBtn:hover{
+    background:#201d2f;
+    color: #fff;
+    border:1px solid #3d9e6e;
+    }
+    nav ul li:hover button.active{
+        background: #1cc483;
+        color:#fff;
+        border: 2px solid #fff;
+    }
+    nav ul li button.subBtn.hoverd,
+    .subBtn.hoverd{
+        background: #fff;
+        color: #3d9e6e;
+        transition: all .3s;
+        cursor: pointer;
+    }
+    .add-item .btn{
+        margin-top: 2rem;
+    }
+
 
         
     
