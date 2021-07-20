@@ -253,7 +253,7 @@ additionForm.addEventListener('submit', (e) => {
     if (tableHeigth <= 375) moveForm(tableHeigth);
 
     mainTableContainer.scrollTop = 0;
-    if(onTablet) window.scrollTo(0, 0);
+    if (onTablet) window.scrollTo(0, 0);
     clearInputs();
 })
 function clearInputs() {
@@ -483,10 +483,14 @@ function showTotalMessage() {
     if (onTablet) {
         let totalHeigth = totalAlert.getBoundingClientRect().height + tableHeigth;
 
+        window.scrollTo(0, tableHeigth);
 
-        formContainer.style.transform = `translateY(${totalHeigth - 50}px)`;
-        footer.classList.add('down');
-        totalAlert.classList.add('active');
+        setTimeout(() => {
+            formContainer.style.transform = `translateY(${totalHeigth - 50}px)`;
+            footer.classList.add('down');
+            totalAlert.classList.add('active');
+        }, 300);
+
         return;
     }
     totalAlert.classList.add('down');
