@@ -483,7 +483,7 @@ function showTotalMessage() {
     if (onTablet) {
         let totalHeigth = totalAlert.getBoundingClientRect().height + tableHeigth;
 
-        window.scrollTo(0, tableHeigth);
+        window.scrollTo(0, tableHeigth - 300);
 
         setTimeout(() => {
             formContainer.style.transform = `translateY(${totalHeigth - 50}px)`;
