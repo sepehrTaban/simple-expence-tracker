@@ -32,7 +32,11 @@ body{
     background: #334961;
     position: relative;
     height: auto;
+    overflow-x: hidden;
       
+}
+body::-webkit-scrollbar{
+    display: none;
 }
 .main-header,
 nav{
@@ -93,7 +97,7 @@ nav ul li button.active,
     color: #DDDDDD; 
     transform: translateY(0);
     transition: transform .3s;
-    margin-top: 2rem;
+    
        
 }
 .main{
@@ -116,11 +120,11 @@ nav ul li button.active,
 }
 .result{
     position: relative;
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
-.result::-webkit-scrollbar{
+/*.result::-webkit-scrollbar{
     display: none;
-}
+}*/
 .result .table-container,
 .detail-table-container .detail-table-wrap{
     padding: 0 1rem;       
@@ -385,6 +389,16 @@ input[type="date"]{
         margin-top: 1rem;
           
     }
+    .result{
+        position: relative;
+        overflow: hidden;
+    }
+    .result::-webkit-scrollbar{
+        display: none;
+    }
+    .main-footer{
+        margin-top: 2rem;
+    }
     .main-footer.down{
         transform: translateY(200px);
         transition: transform .3s;
@@ -442,6 +456,10 @@ input[type="date"]{
     }
     .add-item .btn{
         margin-top: 2rem;
+    }
+    .add-item p{
+        text-align: center;
+        
     }
 
 

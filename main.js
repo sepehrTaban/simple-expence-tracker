@@ -93,10 +93,10 @@ hambergerMenu.addEventListener('click', () => {
 })
 
 const subBtns = Array.from(document.querySelectorAll('.subBtn'));
-subBtns.forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-        
-        if(!onTablet) return;
+subBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+
+        if (!onTablet) return;
 
         btn.classList.add('hoverd');
         setTimeout(() => {
@@ -160,11 +160,13 @@ function changeTheForm() {
     if (onTablet) {
         if (!todayItems.length) {
             tellUserThereIsNoSavedItem();
+            //window.scrollTo(0, tableHeigth);
             return;
         }
         let preTranslate = localStorage.getItem('formTranslate');
         setTimeout(() => {
             formContainer.style.transform = preTranslate;
+            window.scrollTo(0, tableHeigth);
             footer.classList.remove('down');
         }, 1000);
     }
@@ -249,15 +251,15 @@ additionForm.addEventListener('submit', (e) => {
 
     tableHeigth = mainTableContainer.getBoundingClientRect().height;
     if (tableHeigth <= 375) moveForm(tableHeigth);
-    
+
     mainTableContainer.scrollTop = 0;
-    window.scrollTo(0,0);
+    if(onTablet) window.scrollTo(0, 0);
     clearInputs();
 })
 function clearInputs() {
     itemNameInput.value = "";
     itemCostInput.value = "";
-    if(onTablet) return;
+    if (onTablet) return;
     itemNameInput.focus();
 }
 
@@ -643,6 +645,8 @@ function deleteItemsOfToday() {
     while (mainTable.firstChild)
         mainTable.removeChild(mainTable.firstChild);
     tableHeigth = mainTableContainer.getBoundingClientRect().height;
+    if (onTablet)
+        window.scrollTo(0, 0);
 
     if (totOfitems[choosenDate]) {
         delete totOfitems[choosenDate];
