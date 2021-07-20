@@ -6,6 +6,7 @@ const additionForm = document.querySelector('.add-item');
 const calculationForm = document.querySelector('.calc-item');
 const deletionForm = document.querySelector('.delet-item');
 const formContainer = document.querySelector('.forms');
+const footer = document.querySelector('.main-footer');
 
 const totalAlert = document.querySelector('.total-result');
 
@@ -164,6 +165,7 @@ function changeTheForm() {
         let preTranslate = localStorage.getItem('formTranslate');
         setTimeout(() => {
             formContainer.style.transform = preTranslate;
+            footer.classList.remove('down');
         }, 1000);
     }
 
@@ -253,6 +255,7 @@ additionForm.addEventListener('submit', (e) => {
 function clearInputs() {
     itemNameInput.value = "";
     itemCostInput.value = "";
+    if(onTablet) return;
     itemNameInput.focus();
 }
 
@@ -468,6 +471,7 @@ function hideTotalMessage() {
     if (onTablet) {
         let preTranslate = localStorage.getItem('formTranslate');
         formContainer.style.transform = preTranslate;
+        footer.classList.remove('down');
     }
 }
 
@@ -477,6 +481,7 @@ function showTotalMessage() {
 
 
         formContainer.style.transform = `translateY(${totalHeigth - 50}px)`;
+        footer.classList.add('down');
         totalAlert.classList.add('active');
         return;
     }

@@ -30,7 +30,9 @@ button{
 body{
     min-height: 100vh;
     background: #334961;
-    overflow-x: hidden;  
+    position: relative;
+    height: auto;
+      
 }
 .main-header,
 nav{
@@ -88,8 +90,9 @@ nav ul li button.active,
 .main-footer{
     padding: 1rem 0;
     background:#201d2f;
-    color: #DDDDDD;
-    
+    color: #DDDDDD; 
+    transform: translateY(0);
+    transition: transform .3s;    
 }
 .main{
     flex-grow: 1;
@@ -100,7 +103,7 @@ nav ul li button.active,
     width: 100%;
     align-items: flex-start;
     position: relative;
-    overflow-x: hidden;   
+       
 }
 .forms,
 .result,
@@ -111,6 +114,10 @@ nav ul li button.active,
 }
 .result{
     position: relative;
+    overflow-x: hidden;
+}
+.result::-webkit-scrollbar{
+    display: none;
 }
 .result .table-container,
 .detail-table-container .detail-table-wrap{
@@ -367,11 +374,21 @@ input[type="date"]{
     
     .main{
         grid-template-columns: 1fr;
-        height: 100%;
+        min-height: 100%;
+        height: auto;
         width: 100%;
         align-items: flex-start;
         position: relative;
-        justify-content: center;   
+        justify-content: center; 
+          
+    }
+    .main-footer.down{
+        transform: translateY(200px);
+        transition: transform .3s;
+    }
+    .main-footer h2{
+        padding: 0 .5rem;
+        text-align: center;
     }
     .forms{
         width: 80%;
