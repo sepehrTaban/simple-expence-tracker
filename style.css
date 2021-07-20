@@ -6,6 +6,13 @@
     outline: 0;
     scroll-behavior: smooth;
     font-family: tahoma;
+    -webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+     -khtml-user-select: none; 
+       -moz-user-select: none; 
+        -ms-user-select: none; 
+            user-select: none; 
+                               
 }
 body,
 .main-footer,
@@ -252,18 +259,6 @@ nav ul li button.active,
     top: -250px;
 }
 
-.total-result.down,
-.deletMsg.down{
-    transform: translateX(200%) translateY(310px);
-    transition: transform .3s;
-    
-}
-.total-result.down.active,
-.deletMsg.down.active{
-    transform: translateX(0) translateY(310px);
-    transition: transform .3s;
-}
-
 .notSavedMsg.active.scale{
     transform: scale(1.2);
     transition: transform .3s;
@@ -375,6 +370,28 @@ input[type="date"]{
         width: 80%;
         margin: 0 auto;
     }
+    
+}
+@media screen and (min-width:860px){
+    .total-result.down{
+        transform: translateX(200%) translateY(280px);
+        transition: transform .3s;
+    
+    }
+    .total-result.superdown{
+        transform: translateX(200%) translateY(350px);
+        transition: transform .3s;
+    
+    }
+    .total-result.down.active{
+        transform: translateX(0) translateY(280px);
+        transition: transform .3s;
+    }
+    .total-result.superdown.active{
+        transform: translateX(0) translateY(350px);
+        transition: transform .3s;
+    }
+
 }
 @media screen and (max-width:1024px){
     .result{
@@ -587,6 +604,11 @@ input[type="date"]{
     .mainTable tr td:nth-child(3){
         font-size: 1rem;
     }
+    input[type="text"],
+    input[type="date"]{
+        font-size: 16px;
+    }
+
     
     
 }

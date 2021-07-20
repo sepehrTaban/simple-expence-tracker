@@ -84,7 +84,7 @@ function checkTodayStorage() {
 let tableHeigth = mainTableContainer.getBoundingClientRect().height;
 localStorage.setItem("formTranslate", `translateY(${tableHeigth - 100}px)`);
 if (onTablet) formContainer.style.transform = localStorage.getItem("formTranslate");
-
+else formContainer.style.transform = `translateY(${0}px)`;
 
 (!todayItems.length) ? tellUserThereIsNoSavedItem() : showTheTableToUser();
 
@@ -94,10 +94,20 @@ window.addEventListener('resize', () => {
     console.log(onTablet);
 
     let tableHeigth = mainTableContainer.getBoundingClientRect().height;
-    localStorage.setItem("formTranslate", `translateY(${tableHeigth - 100}px)`);
+    
     if (onTablet){
-        formContainer.style.transform = localStorage.getItem("formTranslate");
+        if(!todayItems.length){
+            formContainer.style.transform = `translateY(${tableHeigth}px)`;
+            localStorage.setItem("formTranslate", `translateY(${tableHeigth}px)`);
+
+        }
+        else{
+            formContainer.style.transform = `translateY(${tableHeigth - 100}px)`;
+            localStorage.setItem("formTranslate", `translateY(${tableHeigth - 100}px)`); 
+        } 
+
         totalAlert.classList.remove('down');               
+        totalAlert.classList.remove('superdown');               
     } 
     else formContainer.style.transform = `translateY(${0}px)`
 
@@ -197,7 +207,9 @@ function tellUserThereIsNoSavedItem() {
     let alertBoxHeight = notSavedAnyItemAlert.getBoundingClientRect().height;
     setTimeout(() => {
         notSavedAnyItemAlert.classList.add('active');
-        formContainer.style.transform = `translateY(${alertBoxHeight - 70}px)`
+        if(onTablet)
+        formContainer.style.transform = `translateY(${alertBoxHeight - 70}px)`;
+        else formContainer.style.transform = `translateY(${0}px)`
     }, 500);
 
 }
@@ -509,7 +521,13 @@ function showTotalMessage() {
 
         return;
     }
-    totalAlert.classList.add('down');
+    if(!todayItems.length){
+        totalAlert.classList.add('superdown');
+        totalAlert.classList.remove('down');
+    } else {
+        totalAlert.classList.add('down');
+        totalAlert.classList.remove('superdown');
+    }
     setTimeout(() => {
         totalAlert.classList.add('active');
     }, 500);
