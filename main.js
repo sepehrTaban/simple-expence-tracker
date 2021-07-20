@@ -249,7 +249,9 @@ additionForm.addEventListener('submit', (e) => {
 
     tableHeigth = mainTableContainer.getBoundingClientRect().height;
     if (tableHeigth <= 375) moveForm(tableHeigth);
-
+    
+    mainTableContainer.scrollTop = 0;
+    window.scrollTo(0,0);
     clearInputs();
 })
 function clearInputs() {

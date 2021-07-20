@@ -92,7 +92,9 @@ nav ul li button.active,
     background:#201d2f;
     color: #DDDDDD; 
     transform: translateY(0);
-    transition: transform .3s;    
+    transition: transform .3s;
+    margin-top: 2rem;
+       
 }
 .main{
     flex-grow: 1;
@@ -114,7 +116,7 @@ nav ul li button.active,
 }
 .result{
     position: relative;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 .result::-webkit-scrollbar{
     display: none;
@@ -380,6 +382,7 @@ input[type="date"]{
         align-items: flex-start;
         position: relative;
         justify-content: center; 
+        margin-top: 1rem;
           
     }
     .main-footer.down{
@@ -456,6 +459,9 @@ input[type="date"]{
     .forms label{
         margin-left: 0;
     }
+    .forms label{
+        text-align: center;
+    }
     .delet-item .subBtn{
         margin-left: .5rem;
     }
@@ -469,6 +475,12 @@ input[type="date"]{
     .mainTable tr td:nth-child(1),
     .mainTable tr td:nth-child(3){
         font-size: 1.2rem;
+    }
+    .result{
+        min-height: 550px;
+    }
+    .forms{
+        margin-top: -50px;
     }
     .result .table-container{
         max-height: 375px;
@@ -538,7 +550,7 @@ input[type="date"]{
     .forms .calc-item{
         flex-direction: column;
         align-items: center;
-        min-height: 520px;
+        min-height: 540px;
     }
     .detail-table-container{
         padding: 0 .2rem;
